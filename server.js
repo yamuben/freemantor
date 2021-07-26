@@ -15,13 +15,13 @@ app.use(bodyParser.json());
 app.use("/freementor/v1/user",userRouter);
 
 
-//port:4040
+const port=process.env.PORT;
 const databaseUrl=process.env.DATABASE;
 
 mongoose.connect(databaseUrl,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true,useFindAndModify:false}).then(()=>console.log("Databse connected succesfully"));
 
-app.listen(4040,()=>{
-    console.log('server is running on port 4040');
+app.listen(port,()=>{
+    console.log(`server is running on port ${port}`);
 })
 
 
