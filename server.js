@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import userRouter from "./server/routes/userRoute";
+import userRouter from "./server/routes/userRoute.js";
 import bodyParser from "body-parser";
 
 
