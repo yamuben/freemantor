@@ -1,10 +1,19 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import userRouter from "./server/routes/userRoute";
+import bodyParser from "body-parser";
+
 
 dotenv.config({path:'./.env'});
 
 const app = express();
+
+app.use(bodyParser.json());
+
+
+app.use("/freementor/v1/user",userRouter);
+
 
 //port:4040
 const databaseUrl=process.env.DATABASE;

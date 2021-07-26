@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "test",
+    "start":"babel-node ./server.js",
     "dev-start": "babel-node ./server.js"
   },
   "repository": {
