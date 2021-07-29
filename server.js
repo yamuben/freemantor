@@ -1,8 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import userRouter from "./server/routes/userRoute.js";
 import bodyParser from "body-parser";
+import userRouter from "./server/routes/userRoute.js";
+import sessionRouter from "./server/routes/sessionRoutes";
 
 
 dotenv.config({path:'./.env'});
@@ -13,6 +14,7 @@ app.use(bodyParser.json());
 
 
 app.use("/freementor/v1/user",userRouter);
+app.use("/freementor/v1/session",sessionRouter);
 
 
 app.use('/',(req,res)=>{
