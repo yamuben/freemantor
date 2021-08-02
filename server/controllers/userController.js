@@ -1,7 +1,38 @@
 import UserInfo from "../models/userModel";
+import TokenAuth from "../helpers/TokenAuth";
+
 
 class UserController {
 
+    static signinUser = async (req, res) => {
+
+        const { email, password } = req.body;
+
+
+        const user = await UserInfo.findOne({ email: email, password: password });
+
+        if (!user) {
+            return res.status(404).json({
+                status: 404,
+                message: "user not exist"
+
+            })
+        }
+
+
+        const token = TokenAuth.tokenGenerator({
+            id: user._id,
+            email: user.email,
+            status: user.status,
+            role: user.role
+        })
+        return res.status(200).json({
+            status: 200,
+            message: "Success login",
+            token:token,
+            data: user
+        })
+    }
     //function to register users /signup
 
     static signupUser = async (req, res) => {
@@ -18,6 +49,25 @@ class UserController {
             statu: 200,
             message: "success",
             data: user
+        })
+    }
+
+    
+
+    static getAllMentors = async (req, res) => {
+        const users = await UserInfo.find({role:"mentor"});
+
+        if (!users) {
+            return res.status(404).json({
+                status: 404,
+                message: "failed to get all users"
+            })
+        }
+
+        return res.status(200).json({
+            status: 200,
+            message: "success",
+            dat: users
         })
     }
 
@@ -48,15 +98,25 @@ class UserController {
         }
 
         return res.status(200).json({
-            status:200,
-            message:"Success",
+            status: 200,
+            message: "Success",
             data: user
         })
 
     }
 
-    static updateOneUser = async (req, res) => {
-        const user = await UserInfo.findByIdAndUpdate(req.params.id,req.body);
+      //update role informations of user
+      static updateOneUserRole = async (req, res) => {
+
+        const data = await UserInfo.findById(req.params.id);
+       let role ;
+
+       if(data.role=="user")
+       role="mentor";
+       else
+       role= "user";
+
+        const user = await UserInfo.findByIdAndUpdate(req.params.id,{role:role});
         if (!user) {
             return res.status(404).json({
                 status: 404,
@@ -66,8 +126,28 @@ class UserController {
 
         const updateUser = await UserInfo.findById(req.params.id);
         return res.status(200).json({
-            status:200,
-            message:"Success",
+            status: 200,
+            message: "Success",
+            data: updateUser
+        })
+
+    }
+
+
+    //update all informations of user
+    static updateOneUser = async (req, res) => {
+        const user = await UserInfo.findByIdAndUpdate(req.params.id, req.body);
+        if (!user) {
+            return res.status(404).json({
+                status: 404,
+                message: "user not found"
+            })
+        }
+
+        const updateUser = await UserInfo.findById(req.params.id);
+        return res.status(200).json({
+            status: 200,
+            message: "Success",
             data: updateUser
         })
 
@@ -85,8 +165,8 @@ class UserController {
         }
 
         return res.status(200).json({
-            status:200,
-            message:"Success deleted",
+            status: 200,
+            message: "Success deleted",
             data: user
         })
 
