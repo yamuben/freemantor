@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
+    career:String,
     password: { 
         type: String, 
         default: "12345@@@" },
