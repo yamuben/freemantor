@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         unique: true
     },
+    profilePicture:String,
     career:String,
     password: { 
         type: String, 

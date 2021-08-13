@@ -1,9 +1,12 @@
 import SessionInfo from "../models/session";
 
+
 class SessionController {
 
 
     static sessionRequest = async (req, res) => {
+        console.log(req.user);
+        req.body.user= req.user.id;
         const session = await SessionInfo.create(req.body);
 
         if (!session) {
@@ -54,6 +57,42 @@ class SessionController {
 
     }
 
+    static acceptOneSession = async (req, res) => {
+        const session = await SessionInfo.findByIdAndUpdate(req.params.id,{status:"accept"});
+        if (!session) {
+            return res.status(404).json({
+                status: 404,
+                message: "session not found"
+            })
+        }
+
+        const updatesession = await SessionInfo.findById(req.params.id);
+        return res.status(200).json({
+            status:200,
+            message:"Success",
+            data: updatesession
+        })
+
+    }
+    static declineOneSession = async (req, res) => {
+        const session = await SessionInfo.findByIdAndUpdate(req.params.id,{status:"decline"});
+        if (!session) {
+            return res.status(404).json({
+                status: 404,
+                message: "session not found"
+            })
+        }
+
+        const updatesession = await SessionInfo.findById(req.params.id);
+        return res.status(200).json({
+            status:200,
+            message:"Success",
+            data: updatesession
+        })
+
+    }
+
+
     static updateOneSession = async (req, res) => {
         const session = await SessionInfo.findByIdAndUpdate(req.params.id,req.body);
         if (!session) {
@@ -71,7 +110,6 @@ class SessionController {
         })
 
     }
-
 
 
     static deleteOneSession = async (req, res) => {

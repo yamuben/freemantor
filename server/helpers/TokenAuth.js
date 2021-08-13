@@ -11,6 +11,12 @@ export default class TokenAuth{
 
         return token;
     }
+
+    static getDataFromToken(token){
+        const data =jwt.verify(token,process.env.JWTKEY);
+        return data;
+
+    }
 }
 
 // export default TokenAuth;

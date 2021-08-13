@@ -16,7 +16,7 @@ const SessionSchema = new mongoose.Schema({
     timeToEnd: Date,
     status: {
         type: String,
-        enum: ["pending", "approve", "decline"],
+        enum: ["pending", "accept", "decline"],
         default: "pending"
     }
 });
