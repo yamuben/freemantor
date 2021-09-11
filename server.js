@@ -4,12 +4,15 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import userRouter from "./server/routes/userRoute.js";
 import sessionRouter from "./server/routes/sessionRoutes";
+import cors from "cors";
+
+
 
 
 dotenv.config({path:'./.env'});
 
 const app = express();
-
+app.use(cors());
 app.use(bodyParser.json());
 
 

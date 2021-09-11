@@ -56,7 +56,7 @@ class UserController {
         const user = await UserInfo.create(req.body);
 
         if (!user) {
-            return res.statu(400).json({
+            return res.status(400).json({
                 status: 400,
                 message: "failed to register"
             })
