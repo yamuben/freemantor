@@ -39,6 +39,23 @@ class SessionController {
             data: sessions
         })
     }
+    static getAllSessionsUser = async (req, res) => {
+        const id = req.params.id;
+        const sessions = await SessionInfo.find({user:id});
+
+        if (!sessions) {
+            return res.status(404).json({
+                status: 404,
+                message: "failed to get all sessions"
+            })
+        }
+
+        return res.status(200).json({
+            status: 200,
+            message: "success",
+            data: sessions
+        })
+    }
 
     static getOneSession = async (req, res) => {
         const session = await SessionInfo.findById(req.params.id);
