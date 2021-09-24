@@ -41,20 +41,21 @@ class SessionController {
     }
     static getAllSessionsUser = async (req, res) => {
         const id = req.params.id;
-        const sessions = await SessionInfo.find({user:id});
+        var sessions;
+        if(req.user.role=="mentor"){
+
+            sessions= await SessionInfo.find({mentor:id});
+
+        }else if(req.user.role==="user"){
+
+            sessions= await SessionInfo.find({user:id});
+        } 
 
         if (!sessions) {
-            const mentorSessions = await SessionInfo.find({mentor:id})
-            if(!mentorSessions){
+          
             return res.status(404).json({
                 status: 404,
                 message: "failed to get all sessions"
-            })}
-
-            return res.status(200).json({
-                status: 200,
-                message: "success",
-                data: mentorSessions
             })
 
 
