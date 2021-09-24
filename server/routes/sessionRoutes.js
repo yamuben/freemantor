@@ -8,7 +8,7 @@ const sessionRouter =express.Router();
 
 sessionRouter.post("/request",verifyToken,verifyAccess("user"),SessionController.sessionRequest);
 sessionRouter.get("/all",SessionController.getAllSessions);
-sessionRouter.get("/all/:id",verifyToken,verifyAccess("user"),SessionController.getAllSessionsUser);
+sessionRouter.get("/all/:id",verifyToken,SessionController.getAllSessionsUser);
 sessionRouter.get("/:id", SessionController.getOneSession);
 sessionRouter.patch("/:id", SessionController.updateOneSession);
 sessionRouter.patch("/:id/accept" ,verifyToken,verifyAccess("mentor"), SessionController.acceptOneSession);

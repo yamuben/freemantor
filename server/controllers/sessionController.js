@@ -44,10 +44,20 @@ class SessionController {
         const sessions = await SessionInfo.find({user:id});
 
         if (!sessions) {
+            const mentorSessions = await SessionInfo.find({mentor:id})
+            if(!mentorSessions){
             return res.status(404).json({
                 status: 404,
                 message: "failed to get all sessions"
+            })}
+
+            return res.status(200).json({
+                status: 200,
+                message: "success",
+                data: mentorSessions
             })
+
+
         }
 
         return res.status(200).json({
